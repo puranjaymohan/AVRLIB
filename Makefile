@@ -18,17 +18,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ###
+###
 CC=avr-gcc
 OBJCOPY=avr-objcopy
+INC=-Isrc/include
+LIB=src/lib/
+###
+
 #Define the AVR Microcontroller here
 MCU=atmega32
-
 #Define the name of your C file here
 TARGET=example
 
-CFLAGS= -mmcu=$(MCU) -Os -Wall
+CFLAGS= -mmcu=$(MCU) -Os -Wall $(INC) 
+
 DEPS=lcd.h
-OBJ=$(TARGET).o lcd.o
+OBJ=$(TARGET).o $(LIB)lcd.o
+
 REMOVE=rm -f
 
 PROG=usbasp
@@ -41,9 +47,12 @@ $(TARGET).hex: $(TARGET).elf
 	$(OBJCOPY) -O ihex -j .text -j .data $(TARGET).elf $(TARGET).hex
 
 $(TARGET).elf: $(OBJ) 
-	$(CC) $(CFLAGS) $(TARGET).o lcd.o --output $(TARGET).elf
+	$(CC) $(CFLAGS) $(OBJ)  --output $(TARGET).elf
 
 %.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+src/lib/%.o: src/lib/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
