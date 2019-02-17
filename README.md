@@ -25,6 +25,8 @@ example:
 MCU=atmega32                                                                                            
 #Define the name of your C file here                                                             
 TARGET=example
+#add all the APIs you need using $(LIB)api1 $(LIB)api2 ... format.
+OBJ=$(TARGET).o $(LIB)lcd.o
 ```
 # LICENCE
 # GNU General Public License Version 3
