@@ -10,14 +10,15 @@ AVRLIB is a high level API library for interfacing LCDs, GPIO, USART etc. to the
   - Supports the complete family of AVR Microcontrollers.
 
 > Every API Provides a set of funtions to interface the peripheral.
-> Every funtions is documented in the respective API's Readme file
-> Every API has a example.c file which shows the usage of the funtions
+> Every funtions is documented in the respective API's header file file
+> Every API has a been used in example.c file which shows the usage of the funtions
 
 # Programming the Microcontroller
-Every API comes with a Makefile which includes configurations and targets for programming the controller using AVRDUDE.
+This library comes with a Makefile which includes configurations and targets for programming the controller using AVRDUDE.
 
 # Makefile
-The Makefile for every API has to be configured for using it properly.
+The Makefile has to be configured for using it properly.
+all APIs that you wish to use need to be added to the makefile variable OBJ=$(LIB)"API NAME" without quotes. 
 example:
 ```Makefile
 #Define the AVR Microcontroller here                                                             
