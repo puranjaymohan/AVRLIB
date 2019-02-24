@@ -1,5 +1,5 @@
 /**
-* AVRLIB: Example source code for using the LCD HD44780 API
+* AVRLIB: Example source code for using the LCD API
 *
 * Copyright (C) 2019, PURANJAY MOHAN.
 * This file is part of HD44780 LCD AVR LIBRARY
@@ -18,16 +18,20 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
+#define __MCU__ATMEGA328__
+
 #include "lcd.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
 int main()
 {	
+	
 	lcd_init(); //initialize the LCD
 
-	lcd_write_string("HELLO"); //lcd_write_string() prints strings on the LCD 
+	lcd_write_string("HELLO AVR"); //lcd_write_string() prints strings on the LCD 
 	
+
 	lcd_show_cursor_block(); //lcd_show_cursor_block() turns the cursor to a blinking block
 	
 	lcd_set_cursor(1,0); //lcd_set_cursor() sets the postion of the cursor at (row,column)

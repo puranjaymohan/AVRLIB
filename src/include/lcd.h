@@ -28,7 +28,7 @@
  * define the lcd type with the options given below
  * 1 - 16 X 2
  * 2 - 20 X 4 */
-#define LCDTYPE		2
+#define LCDTYPE		1
 
 /*PIN CONFIGURATIONS
  *define the pins conncted to the lcd

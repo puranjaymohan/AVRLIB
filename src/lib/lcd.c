@@ -23,20 +23,22 @@
 #include <util/delay.h>
 
 void lcd_send_command(unsigned char cmd)
-{
+{	
 	DATAPORT=cmd;
 	_delay_ms(1);
-	CONPORT=(0<<RS)|(0<<RW)|(1<<EN);
+	CONPORT &= ~(1<<RS) & ~(1<<RW);
+	CONPORT |= (1<<EN);
 	_delay_ms(1);
-	CONPORT=(0<<RS)|(0<<RW)|(0<<EN);
-	_delay_ms(50);
+	CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
 	return;
 }
+
+
 
 void lcd_init(void)
 {
 	DATADDR=0xff;
-	CONDDR=(1<<RS)|(1<<EN)|(1<<RW);
+	CONDDR |= (1<<RS)|(1<<EN)|(1<<RW);
 	lcd_send_command(0x38);
 	_delay_ms(1);
 	lcd_send_command(0x01);
@@ -49,12 +51,14 @@ void lcd_init(void)
 }
 
 void lcd_send_data(unsigned char data)
-{
+{	
 	DATAPORT=data;
-	CONPORT=(1<<RS)|(0<<RW)|(1<<EN);
+	CONPORT &= ~(1<<RW);
+	CONPORT |= (1<<RS) | (1<<EN);
 	_delay_ms(1);
-	CONPORT=(1<<RS)|(0<<RW)|(0<<EN);
-	_delay_ms(50);
+	CONPORT &= ~(1<<RW) & ~(1<<EN);
+	CONPORT |= (1<<RS);
+	_delay_ms(1);
 	return;
 }
 
@@ -72,39 +76,33 @@ void lcd_write_string(char *string)
 
 void lcd_set_cursor(int row, int column)
 {	
-	int offset,address=0;
-	if (LCDTYPE == 1)
-	{	
-		offset=(16*row)+column;
-		lcd_send_command(GOTOHOME+offset);
-	}
-	else if (LCDTYPE == 2)
+	unsigned int address=0;
+	switch(row)
 	{
-		switch(row)
-		{
-			case 0:
-				address = 128+column;
-				break;
-			case 1:
-				address = 192+column;
-				break;
-			case 2:
-				address = 148+column;
-				break;
-			case 3: 
-				address = 212+column;
-				break;	
+		case 0:
+			address = 128+column;
+			break;
+		case 1:
+			address = 192+column;
+			break;
+		case 2:
+			address = 148+column;
+			break;
+		case 3: 
+			address = 212+column;
+			break;	
 
-		}
-		
-		lcd_send_command(address);
 	}
+		
+	lcd_send_command(address);
+	
 	return;
 }
 
 void lcd_clrscr(void)
 {
 	lcd_send_command(CLRSCR);
+	lcd_set_cursor(0,0);
 	return;
 }
 
