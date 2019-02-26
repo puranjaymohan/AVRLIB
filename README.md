@@ -83,12 +83,18 @@ Change the file according to your connections, variables which need changes are 
 ### 1. lcd_init()
 This functions initilizes the LCD and sets up all the registers. It has to be called before using any other lcd api function.
 It takes no parameters and also doesn't return anything.
+
 Parameters - __Void__
+
 Returns - __Void__
+
 ### 2. lcd_send_command(__unsigned char__ command)
 This function can be called to send a command to the lcd in 8 bit format, for example 0x01 (clear screen).
+
 Parameters - __unsigned char__ command 
+
 Returns - __Void__
+
 __Example:__
 ```c
 unsigned char cmd = 0x01;
@@ -96,8 +102,11 @@ lcd_send_command(cmd);
 ```
 ### 3. lcd_send_data(__unsigned char__ data)
 This function can be called to send data(single character) to the lcd in, for example 'P'.
+
 Parameters - __unsigned char__ data 
+
 Returns - __Void__
+
 __Example:__
 ```c
 unsigned char data = 'P';
@@ -106,8 +115,11 @@ lcd_send_command(data);
 ### 4. lcd_write_string(__char *__ string)
 This function can be called to send a string to the lcd, for example "HELLO LCD".
 It takes a character pointer to a string and return nothing.
+
 Parameters - __char *__ command 
+
 Returns - __Void__
+
 __Example:__
 ```c
 char *string = "HELLO LCD :D";
@@ -115,8 +127,11 @@ lcd_send_command(string);
 ```
 ### 5. lcd_set_cursor(__int__ row, __int__ column)
 This function can be called to change the position of the cursor to any row and column of the LCD, for example 2,0 (second row, first column). It takes two integers as parameters for row and column, it assumes 0,0 as first row and first column.
+
 Parameters - __int__ row, __int__  column 
+
 Returns - __Void__
+
 __Example:__
 ```c
 int row = 2;
@@ -125,40 +140,55 @@ lcd_set_cursor(row,col);
 ```
 ### 6. lcd_clrscr()
 This function can be called to clear the screen and bring the cursor to home position (0,0).
+
 Parameters - __void__
+
 Returns - __Void__
+
 __Example:__
 ```c
 lcd_clrscr();
 ```
 ### 7. lcd_clrscr()
 This function can be called to clear the screen and bring the cursor to home position (0,0).
+
 Parameters - __void__
+
 Returns - __Void__
+
 __Example:__
 ```c
 lcd_clrscr();
 ```
 ### 8. lcd_show_cursor_underline()
 This function can be called to make the cursor appear as an underscore i.e. '_'.
+
 Parameters - __void__
+
 Returns - __Void__
+
 __Example:__
 ```c
 lcd_show_cursor_underline();
 ```
 ### 9. lcd_show_cursor_block()
 This function can be called to make the cursor appear as a block or a box.
+
 Parameters - __void__
+
 Returns - __Void__
+
 __Example:__
 ```c
 lcd_show_cursor_block();
 ```
 ### 9. lcd_hide_cursor()
 This function can be called to hide the cursor, any of the above two functions can be called to get back the cursor.
+
 Parameters - __void__
+
 Returns - __Void__
+
 __Example:__
 ```c
 lcd_hide_cursor();
