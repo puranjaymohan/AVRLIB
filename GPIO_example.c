@@ -18,8 +18,8 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
-#define __MCU__ATMEGA328__
-#include "gpio.h"
+
+#include "gpio.h"  //Define __MCU__mcuname__ in this file
 #include <avr/io.h>
 #include <util/delay.h>
 
