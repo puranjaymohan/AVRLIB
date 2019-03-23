@@ -194,6 +194,79 @@ __Example:__
 lcd_hide_cursor();
 ```
 
+# GPIO API
+This API provides functions to interface GPIOs. It provides functions for easy usage of gpios, the functions are similar to arduino's pinMode and digitalWrite functions.
+## Configuring the API
+Edit the gpio.h header file which can be found at src/include/gpio.h, in this file define the crystal frequency and the mcu name.
+Change the file according to your connections, variables which need changes are given below.
+```c
+#define __MCU__ATMEGA328__  // define microcontroller name here.
+#ifndef GPIO_H
+#ifndef F_CPU
+#define F_CPU 16000000UL  // define frequency here.
+#endif
+#define GPIO_H
+```
+## Functions Provided by GPIO API
+### 1. gpio_set_mode_output(__char__ port, __unsigned int__ gpio)
+This function initializes the given gpio of the given port as an output.
+It takes Port name and pin as parameters, doesn't return anything.
+
+Parameters - __char__ port, __unsigned int__ gpio
+
+Returns - __Void__
+
+__Example:__
+```c
+gpio_set_mode_output('B',5); // Initializing pin 5 of port B as an output
+```
+### 2. gpio_set_mode_input(__char__ port, __unsigned int__ gpio, __unsigned int__ pull);
+This function sets the gpio of given port as an input.
+It takes Port name, pin, and pull(0 or 1) as parameters, doesn't return anything.
+
+Parameters - __char__ port, __unsigned int__ gpio, __unsigned int__ pull
+
+Returns - __Void__
+
+__Example:__
+```c
+gpio_set_mode_input('B',5,1); // Initializing pin 5 of port B as an input with internal pull-up
+gpio_set_mode_input('B',0,0); // Initializing pin 0 of port B as an input with internal pull-down
+```
+### 3. gpio_set_low(__char__ port, __unsigned int__ gpio);
+This function writes a 0 to the given pin of the given port.
+
+Parameters - __char__ port, __unsigned int__ gpio 
+
+Returns - __Void__
+
+__Example:__
+```c
+gpio_set_low('B',3); //Writing a 0 to pin 3 of Port B
+```
+### 4. gpio_set_high(__char__ port, __unsigned int__ gpio);
+This function writes a 1 to the given pin of the given port.
+
+Parameters - __char__ port, __unsigned int__ gpio 
+
+Returns - __Void__
+
+__Example:__
+```c
+gpio_set_high('A',3); //Writing a 1 to pin 3 of Port B
+```
+### 5. unsigned int gpio_read_pin(__char__ port, __unsigned int__ gpio);
+This function reads the pin of given port and returns the value as an int(0 or 1)
+
+Parameters - __char__ port, __unsigned int__ gpio 
+
+Returns - __Void__
+
+__Example:__
+```c
+unsigned int value;
+value=gpio_read_pin("C", 3); //reading the value of pin 3 of Port C and stroing it in value.
+```
 
 ### LICENCE
 #### GNU General Public License Version 3
