@@ -182,7 +182,7 @@ __Example:__
 ```c
 lcd_show_cursor_block();
 ```
-### 9. lcd_hide_cursor()
+### 10. lcd_hide_cursor()
 This function can be called to hide the cursor, any of the above two functions can be called to get back the cursor.
 
 Parameters - __void__
