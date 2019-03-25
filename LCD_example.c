@@ -18,7 +18,6 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
-#define __MCU__ATMEGA328__
 
 #include "lcd.h"
 #include <avr/io.h>

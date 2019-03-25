@@ -38,6 +38,6 @@ void gpio_set_low(char port, unsigned int gpio);
 /*This function writes a 1 to the given pin of the given port*/
 void gpio_set_high(char port, unsigned int gpio);
 
-/*This fucntion read the pin of given port and return the value as an int(0 or 1)*/
-unsigned int gpio_read_pin(char port_, unsigned int gpio);
+/*This function reads the pin of given port and returns the value as an int(0 or 1)*/
+unsigned int gpio_read_pin(char port, unsigned int gpio);
 #endif

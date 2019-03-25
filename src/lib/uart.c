@@ -1,8 +1,8 @@
 /**
-* AVRLIB: Example source code for using the GPIO API
+* AVRLIB: UART API related functions definitions
 *
 * Copyright (C) 2019, PURANJAY MOHAN.
-* This file is part of HD44780 LCD AVR LIBRARY
+* This file is part of UART API LIBRARY
 *
 * AVRLIB is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,37 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
-
-#include "gpio.h"  //Define __MCU__mcuname__ in this file
+#include "uart.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
-int main()
-{	
-	gpio_set_mode_output('D',6);
-	for (;;)
-	{
-		gpio_set_high('D',6); //writing a one to PORTD pin 6
-		_delay_ms(1000);      //delay of one second	
-		gpio_set_low('D',6);  //writing a zero to PORTD pin 6
-		_delay_ms(1000);      //delay of one second
-	}	
-	return 0;
+void uart_init(void)
+{
+	UBRRH = (uint8_t)(BAUD_PRESCALLER>>8);
+	UBRRL = (uint8_t)(BAUD_PRESCALLER);
+	UCSRB |= (1<<RXEN)|(1<<TXEN);
+	UCSRC |= (1<<UCSZ0)|(1<<UCSZ1)| UCSRC_SELECT;
 }
 
+unsigned char uart_receive(void)
+{
+	while(!(UCSRA & (1<<RXC)));
+	return UDR;
+}
 
+void uart_send( unsigned char data)
+{
+	while(!(UCSRA & (1<<UDRE)));
+	UDR = data;
+	return;
+}
 
-
-
+void uart_send_string(char* StringPtr)
+{
+	while(*StringPtr != 0x00)
+	{
+		uart_send(*StringPtr);
+		StringPtr++;
+	}
+	return;
+}

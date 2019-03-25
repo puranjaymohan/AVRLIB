@@ -28,9 +28,9 @@ LIB=src/lib/
 #Define the AVR Microcontroller here
 MCU=atmega328p
 #Define the name of your C file here
-TARGET=GPIO_example
+TARGET=UART_example
 #add all the APIs you need using $(LIB)api1 $(LIB)api2 ... format.
-OBJ=$(TARGET).o $(LIB)lcd.o $(LIB)gpio.o
+OBJ=$(TARGET).o $(LIB)lcd.o $(LIB)gpio.o $(LIB)uart.o
 
 
 CFLAGS= -mmcu=$(MCU) -Os -Wall $(INC) 
