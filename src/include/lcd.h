@@ -18,34 +18,13 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
-
-
 #ifndef LCD_H
-/*Define the cpu frequency of your AVR microcontroller*/
-#define F_CPU 16000000UL
+#define LCD_H
+#include "config.h"
+#include "lcd_config.h"
 
-/*LCD TYPES
- * define the lcd type with the options given below
- * 1 - 16 X 2
- * 2 - 20 X 4 */
-#define LCDTYPE		1
+/*COMMAND DEFINITIONS*/
 
-/*PIN CONFIGURATIONS
- *define the pins conncted to the lcd
- *DATAPORT is the port connected to data pins
- *similarly define all connections*/
-#define DATAPORT	PORTC
-#define DATAPIN		PINC
-#define DATADDR		DDRC
-#define RS		PD3
-#define RW		PD4
-#define EN		PD7
-#define CONPORT		PORTD
-#define CONPIN		PIND
-#define CONDDR		DDRD
-
-/*COMMAND DEFINITIONS
- * Changes here are not required*/
 #define CLRSCR		0x01
 #define BIT8LINE2	0x38
 #define CURSORVISIBLE	0x0E

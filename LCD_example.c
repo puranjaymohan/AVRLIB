@@ -24,29 +24,34 @@
 #include <util/delay.h>
 
 int main()
-{	
-	
+{
+
 	lcd_init(); //initialize the LCD
 
-	lcd_write_string("HELLO AVR"); //lcd_write_string() prints strings on the LCD 
-	
+	lcd_write_string("HELLO AVR"); //lcd_write_string() prints strings on the LCD
+
 
 	lcd_show_cursor_block(); //lcd_show_cursor_block() turns the cursor to a blinking block
-	
+
 	lcd_set_cursor(1,0); //lcd_set_cursor() sets the postion of the cursor at (row,column)
 
 	lcd_write_string("HD44780 LCD API FOR");
 	lcd_set_cursor(2,0);
-	lcd_write_string("AVR MICROCONTROLLERS");	
+	lcd_write_string("AVR MICROCONTROLLERS");
 	lcd_set_cursor(3,0);
 	lcd_write_string("BY PURANJAY MOHAN");
-	_delay_ms(5000);
-	
-	lcd_clrscr(); //lcd_clrscr() clears the screen
-	
-	lcd_hide_cursor(); //lcd_hide_cursor() hides the cursor from the dislay
-	_delay_ms(1000);
-	lcd_show_cursor_underline(); //lcd_show_cursor_underline() shows the cursor as an underscore
+	for(;;){
+	_delay_ms(500);
+	lcd_show_cursor_underline();
+	_delay_ms(500);
+	lcd_show_cursor_block();
+	_delay_ms(500);
+	}
+	//lcd_clrscr(); //lcd_clrscr() clears the screen
+
+	//lcd_hide_cursor(); //lcd_hide_cursor() hides the cursor from the dislay
+	//_delay_ms(1000);
+	//lcd_show_cursor_underline(); //lcd_show_cursor_underline() shows the cursor as an underscore
 	return 0;
 }
 

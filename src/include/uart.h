@@ -19,10 +19,12 @@
 **/
 
 
-#define __MCU__ATMEGA328__  //Declare MCU name here
 
-#ifndef __UART_H__
-//Definitions for compatibility between atmega32 and atmega328p  
+#ifndef __UART_H_
+#define __UART_H__
+#include "config.h"
+#include "uart_config.h"
+//Definitions for compatibility between atmega32 and atmega328p
 #ifdef __MCU__ATMEGA328__
 #define UBRRH UBRR0H
 #define UBRRL UBRR0L
@@ -38,7 +40,7 @@
 #define RXCIE RXCIE0
 
 #define UCSRC UCSR0C
-#define URSEL 
+#define URSEL
 #define UCSZ0 UCSZ00
 #define UCSZ1 UCSZ01
 #define URSEL
@@ -48,11 +50,6 @@
 #endif
 //end of compatibility definitions
 
-#define __UART_H__
-#ifndef F_CPU
-#define F_CPU 16000000UL //define CPU frequency here
-#endif
-#define BAUDRATE 9600  // define Buad rate here
 #define BAUD_PRESCALLER (((F_CPU / (BAUDRATE * 16UL))) - 1)
 
 /*Functions Provided by UART API*/

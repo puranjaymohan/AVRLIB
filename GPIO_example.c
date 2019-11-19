@@ -24,15 +24,15 @@
 #include <util/delay.h>
 
 int main()
-{	
+{
 	gpio_set_mode_output('D',6);
 	for (;;)
 	{
 		gpio_set_high('D',6); //writing a one to PORTD pin 6
-		_delay_ms(1000);      //delay of one second	
+		_delay_ms(1000);      //delay of one second
 		gpio_set_low('D',6);  //writing a zero to PORTD pin 6
 		_delay_ms(1000);      //delay of one second
-	}	
+	}
 	return 0;
 }
 

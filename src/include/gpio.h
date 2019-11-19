@@ -18,12 +18,11 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 **/
 
-#define __MCU__ATMEGA328__
 #ifndef GPIO_H
-#ifndef F_CPU
-#define F_CPU 16000000UL
-#endif
 #define GPIO_H
+#include "config.h"
+
+
 /*Functions provided by GPIO API*/
 
 /*This function sets the gpio of given port as an output*/
