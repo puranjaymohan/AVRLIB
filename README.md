@@ -53,7 +53,7 @@ OBJ=$(TARGET).o $(LIB)lcd.o  $(LIB)gpio.o
 #define F_CPU 16000000UL
 ```
 # LCD API 
-This API provides functions to interface HD44780 LCD. This supports 16x2 and 20x4 LCDs, but support for other LCDs can be added easily.
+This API provides functions to interface HD44780 LCD in both 4 and 8 bit mode. This only supports 16x2 and 20x4 LCDs, but support for other LCDs can be added easily.
 ## Configuring the API
 Edit the lcd_config.h header file which can be found at src/include/, in this file define the pins which you have used to connect you LCD to your microcontroller.
 Change the file according to your connections, variables which need changes are given below.
@@ -82,9 +82,11 @@ Change the file according to your connections, variables which need changes are 
 ## Functions Provided by LCD API
 ### 1. lcd_init()
 This functions initilizes the LCD and sets up all the registers. It has to be called before using any other lcd api function.
-It takes no parameters and also doesn't return anything.
+It takes mode as the parameter and doesn't return anything.
+mode = 0 --> 8 bit mode.
+mode = 1 --. 4 bit mode.
 
-Parameters - __Void__
+Parameters - __unsigned int__ mode
 
 Returns - __Void__
 
