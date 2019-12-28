@@ -59,12 +59,15 @@
 void uart_init(void);
 
 /*This fuctions reads the uart buffer and returns the data as an unsigned character*/
-unsigned char uart_receive(void);
+char uart_receive(void);
 
 /*This function can be called to send data through UART as an unsigned character*/
-void uart_send(unsigned char data);
+void uart_send(char data);
 
 /*This function can be called to send a string through the UART by providing the pointer to the string as the parameter.*/
 void uart_send_string(char* StringPtr);
+
+/*This function can be called to receive a string through the UART by providing the pointer to the place where the string has to be stored and also the length of the string.*/
+void uart_receive_string(char* StringPtr, unsigned int len);
 
 #endif

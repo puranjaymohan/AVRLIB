@@ -30,13 +30,13 @@ void uart_init(void)
 	UCSRC |= (1<<UCSZ0)|(1<<UCSZ1)| UCSRC_SELECT;
 }
 
-unsigned char uart_receive(void)
+char uart_receive(void)
 {
 	while(!(UCSRA & (1<<RXC)));
 	return UDR;
 }
 
-void uart_send( unsigned char data)
+void uart_send(char data)
 {
 	while(!(UCSRA & (1<<UDRE)));
 	UDR = data;
@@ -52,3 +52,15 @@ void uart_send_string(char* StringPtr)
 	}
 	return;
 }
+
+void uart_receive_string(char* StringPtr, unsigned int len)
+{
+	int i=0;
+	for(i; i<len; i++){
+		*StringPtr = uart_receive();
+		StringPtr++;
+	}
+	*StringPtr = '\0';
+	StringPtr -= len;
+}
+
