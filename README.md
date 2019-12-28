@@ -34,9 +34,8 @@ OBJ=$(TARGET).o $(LIB)lcd.o
 #Define the AVR Microcontroller here                                                             
 MCU=atmega32
 ```
-2. include the API in your project by adding #include "API.h" to the top of your source file. Add a definition about your microcontroller before including the above file.
+2. include the API in your project by adding #include "API.h" to the top of your source file.
 ```c
-#define __MCU__ATMEGA32__
 #include "gpio.h"
 ```
 
@@ -48,16 +47,17 @@ MCU=atmega32
 #Don't remove the $(TARGET).o , just add all the required apis after $(TARGET).o. Examole for using LCD and GPIO api
 OBJ=$(TARGET).o $(LIB)lcd.o  $(LIB)gpio.o
 ```
+5. Edit the config.h file present in src/include/ and add details about the cpu frequency and target microcontroller
+```Makefile
+#define __MCU__ATMEGA32__
+#define F_CPU 16000000UL
+```
 # LCD API 
 This API provides functions to interface HD44780 LCD. This supports 16x2 and 20x4 LCDs, but support for other LCDs can be added easily.
 ## Configuring the API
-Edit the lcd.h header file which can be found at src/include/lcd.h, in this file define the pins which you have used to connect you LCD to your microcontroller.
+Edit the lcd_config.h header file which can be found at src/include/, in this file define the pins which you have used to connect you LCD to your microcontroller.
 Change the file according to your connections, variables which need changes are given below.
 ```c
-#ifndef LCD_H
-/*Define the cpu frequency of your AVR microcontroller*/
-#define F_CPU 16000000UL
-
 /*LCD TYPES
  * define the lcd type with the options given below
  * 1 - 16 X 2
@@ -197,16 +197,7 @@ lcd_hide_cursor();
 # GPIO API
 This API provides functions to interface GPIOs. It provides functions for easy usage of gpios, the functions are similar to arduino's pinMode and digitalWrite functions.
 ## Configuring the API
-Edit the gpio.h header file which can be found at src/include/gpio.h, in this file define the crystal frequency and the mcu name.
-Change the file according to your connections, variables which need changes are given below.
-```c
-#define __MCU__ATMEGA328__  // define microcontroller name here.
-#ifndef GPIO_H
-#ifndef F_CPU
-#define F_CPU 16000000UL  // define frequency here.
-#endif
-#define GPIO_H
-```
+Edit the config.h header file which can be found at src/include/, in this file define the crystal frequency and the mcu name. This API doesn't requires any other configurations
 ## Functions Provided by GPIO API
 ### 1. gpio_set_mode_output(__char__ port, __unsigned int__ gpio)
 This function initializes the given gpio of the given port as an output.
@@ -260,14 +251,66 @@ This function reads the pin of given port and returns the value as an int(0 or 1
 
 Parameters - __char__ port, __unsigned int__ gpio 
 
-Returns - __Void__
+Returns - __unsigned int__ value
 
 __Example:__
 ```c
 unsigned int value;
-value=gpio_read_pin("C", 3); //reading the value of pin 3 of Port C and stroing it in value.
+value = gpio_read_pin("C", 3); //reading the value of pin 3 of Port C and stroing it in value.
 ```
+# UART API
+This API provides functions to interface the UART peripheral of the microcontroller. 
+## Configuring the API
+Edit the uart_config.h header file which can be found at src/include/, in this file define the baud rate for the uart communication. This API doesn't requires any other configurations
+## Functions Provided by UART API
+### 1. uart_init(__void__)
+This Functions initializes the uart register with the given baud rate and data frame specification, they can exclusively be edited in src/lib/uart.c
+This function has to be called before using any other API functions
+
+Parameters - __Void__
+
+Returns - __Void__
+
+__Example:__
+```c
+uart_init(); // Initializing uart with baud rate given in uart_config.h
+```
+### 2. unsigned char uart_receive(__void__);
+This function reads the uart buffer and returns the data as an unsigned character.
+
+Parameters - __Void__
+
+Returns - __unsigned char__
+
+__Example:__
+```c
+unsigned char data;
+data = uart_receive();
+```
+### 3. uart_send(__unsigned char__ data);
+This function can be called to send data through UART as an unsigned character(one byte).
+
+Parameters - __unsigned char__ data 
+
+Returns - __Void__
+
+__Example:__
+```c
+uart_send('P');
+```
+### 4. uart_send_string(__char*__ StringPtr);
+This function can be called to send a string through the UART by providing the pointer to the string as the parameter.
+
+Parameters - __char*__ ptr 
+
+Returns - __Void__
+
+__Example:__
+```c
+char string[] = "Hello";
+uart_send_string(string);
+```
+
 
 ### LICENCE
 #### GNU General Public License Version 3
-
