@@ -275,22 +275,22 @@ __Example:__
 ```c
 uart_init(); // Initializing uart with baud rate given in uart_config.h
 ```
-### 2. unsigned char uart_receive(__void__);
+### 2. char uart_receive(__void__);
 This function reads the uart buffer and returns the data as an unsigned character.
 
 Parameters - __Void__
 
-Returns - __unsigned char__
+Returns - __char__
 
 __Example:__
 ```c
-unsigned char data;
+char data;
 data = uart_receive();
 ```
-### 3. uart_send(__unsigned char__ data);
+### 3. uart_send(__char__ data);
 This function can be called to send data through UART as an unsigned character(one byte).
 
-Parameters - __unsigned char__ data 
+Parameters - __char__ data 
 
 Returns - __Void__
 
@@ -310,7 +310,19 @@ __Example:__
 char string[] = "Hello";
 uart_send_string(string);
 ```
+### 5. uart_receive_string(__char*__ StringPtr, __unsigned int__ len);
+This function can be called to receive a string through the UART by providing the pointer to the place where the string has to be stored and also the length of the string.
 
+Parameters - __char*__ ptr 
+
+Returns - __Void__
+
+__Example:__
+```c
+unsigned int len = 5;
+char string[5];
+uart_receive_string(string, len);
+```
 
 ### LICENCE
 #### GNU General Public License Version 3
