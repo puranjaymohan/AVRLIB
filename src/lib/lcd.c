@@ -22,44 +22,104 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+static int bit4 = 0;
+
 void lcd_send_command(unsigned char cmd)
-{	
-	DATAPORT=cmd;
-	_delay_ms(1);
-	CONPORT &= ~(1<<RS) & ~(1<<RW);
-	CONPORT |= (1<<EN);
-	_delay_ms(1);
-	CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
-	return;
+{
+	if (bit4==0){
+		DATAPORT=cmd;
+		_delay_ms(1);
+		CONPORT &= ~(1<<RS) & ~(1<<RW);
+		CONPORT |= (1<<EN);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
+		return;
+	}else if(bit4 == 1){
+		DATAPORT = (cmd&0xF0) | (DATAPORT & 0x0F);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RS) & ~(1<<RW);
+		CONPORT |= (1<<EN);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
+
+		_delay_ms(1);
+		DATAPORT = (cmd << 4) | (DATAPORT & 0x0F);
+		CONPORT &= ~(1<<RS) & ~(1<<RW);
+		CONPORT |= (1<<EN);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
+		_delay_ms(2);
+		return;
+	}
 }
 
 
 
-void lcd_init(void)
+void lcd_init(unsigned int mode)
 {
-	DATADDR=0xff;
-	CONDDR |= (1<<RS)|(1<<EN)|(1<<RW);
-	lcd_send_command(0x38);
-	_delay_ms(1);
-	lcd_send_command(0x01);
-	_delay_ms(1);
-	lcd_send_command(0x0E);
-	_delay_ms(1);
-	lcd_send_command(0x80);
-	_delay_ms(1);
+	_delay_ms(100);
+	switch(mode){
+		case 0:
+			bit4=0;
+			DATADDR=0xff;
+			CONDDR |= (1<<RS)|(1<<EN)|(1<<RW);
+			lcd_send_command(0x38);
+			_delay_ms(1);
+			lcd_send_command(0x01);
+			_delay_ms(1);
+			lcd_send_command(0x0E);
+			_delay_ms(1);
+			lcd_send_command(0x80);
+			_delay_ms(1);
+			break;
+		case 1:
+			bit4=1;
+			DATADDR=0xf0 | DATADDR;
+			CONDDR |= (1<<RS)|(1<<EN)|(1<<RW);
+			lcd_send_command(0x28);
+			_delay_ms(1);
+			lcd_send_command(0x01);
+			_delay_ms(1);
+			lcd_send_command(0x0E);
+			_delay_ms(1);
+			lcd_send_command(0x80);
+			_delay_ms(1);
+			break;
+
 	return;
+	}
 }
 
 void lcd_send_data(unsigned char data)
-{	
-	DATAPORT=data;
-	CONPORT &= ~(1<<RW);
-	CONPORT |= (1<<RS) | (1<<EN);
-	_delay_ms(1);
-	CONPORT &= ~(1<<RW) & ~(1<<EN);
-	CONPORT |= (1<<RS);
-	_delay_ms(1);
-	return;
+{
+	if(bit4 == 0){
+		DATAPORT=data;
+		CONPORT &= ~(1<<RW);
+		CONPORT |= (1<<RS) | (1<<EN);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RW) & ~(1<<EN);
+		CONPORT |= (1<<RS);
+		_delay_ms(1);
+		return;
+	}
+
+	else if(bit4 == 1){
+		DATAPORT = (data & 0xF0) | (DATAPORT & 0x0F) ;
+		CONPORT &= ~(1<<RW);
+		CONPORT |= (1<<RS) | (1<<EN);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RW) & ~(1<<EN);
+		CONPORT |= (1<<RS);
+		_delay_ms(1);
+		DATAPORT = (data << 4) | (DATAPORT & 0x0F);
+		CONPORT &= ~(1<<RW);
+		CONPORT |= (1<<RS) | (1<<EN);
+		_delay_ms(1);
+		CONPORT &= ~(1<<RW) & ~(1<<EN);
+		CONPORT |= (1<<RS);
+		_delay_ms(2);
+		return;
+	}
 }
 
 void lcd_write_string(char *string)
@@ -75,7 +135,7 @@ void lcd_write_string(char *string)
 }
 
 void lcd_set_cursor(int row, int column)
-{	
+{
 	unsigned int address=0;
 	switch(row)
 	{
@@ -88,14 +148,14 @@ void lcd_set_cursor(int row, int column)
 		case 2:
 			address = 148+column;
 			break;
-		case 3: 
+		case 3:
 			address = 212+column;
-			break;	
+			break;
 
 	}
-		
+
 	lcd_send_command(address);
-	
+
 	return;
 }
 
@@ -122,4 +182,4 @@ void lcd_show_cursor_block()
 {
 	lcd_send_command(0x0F);
 	return;
-}	
+}

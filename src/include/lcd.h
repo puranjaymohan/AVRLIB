@@ -32,8 +32,11 @@
 
 /*FUNCTIONS PROVIDED BY THIS API*/
 
-/*This function has to be called before using any other lcd functions*/
-void lcd_init(void);
+/*This function has to be called before using any other lcd functions.
+ * It initializes the LCD in 4bit or 8bit modes.
+ * mode = 0 --> 8 bit mode
+ * mode = 1 --> 4 bit mode*/
+void lcd_init(unsigned int mode);
 
 /*This function sends data to the lcd and displays it, it takes a character as a parameter*/
 void lcd_send_data(unsigned char data);

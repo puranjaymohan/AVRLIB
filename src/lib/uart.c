@@ -56,7 +56,7 @@ void uart_send_string(char* StringPtr)
 void uart_receive_string(char* StringPtr, unsigned int len)
 {
 	int i=0;
-	for(i; i<len; i++){
+	for(i=0; i<len; i++){
 		*StringPtr = uart_receive();
 		StringPtr++;
 	}
