@@ -22,6 +22,7 @@ AVRLIB is a high level Hardware Abstarction API library for interfacing LCDs, GP
 [License](#license)
 
 <a name="features"/>
+
 ## Features of this library:
 
   - Written in C, well documented and includes many examples.
@@ -34,10 +35,12 @@ AVRLIB is a high level Hardware Abstarction API library for interfacing LCDs, GP
 > Every API has a API_example.c file which shows the usage of the funtions.
 
 <a name="program"/>
+
 ## Programming the Microcontroller
 This library comes with a Makefile which includes configurations and targets for programming the controller using AVRDUDE. The microcontroller can be programmed via any other method if required.
 
 <a name="makefile"/>
+
 ## Makefile
 The Makefile has to be configured for using it properly.
 all APIs that you wish to use need to be added to the makefile variable OBJ=$(LIB)"API NAME" without quotes. 
@@ -52,6 +55,7 @@ OBJ=$(TARGET).o $(LIB)lcd.o
 ```
 
 <a name="howtouse"/>
+
 ## Using an API in your project
 1. define the microcontroller you are using in the Makefile using the MCU variable.
 ```Makefile
@@ -78,6 +82,7 @@ OBJ=$(TARGET).o $(LIB)lcd.o  $(LIB)gpio.o
 ```
 
 <a name="lcdapi"/>
+
 # LCD API 
 This API provides functions to interface HD44780 LCD in both 4 and 8 bit mode. This only supports 16x2 and 20x4 LCDs, but support for other LCDs can be added easily.
 ## Configuring the API
@@ -223,6 +228,7 @@ lcd_hide_cursor();
 ```
 
 <a name="gpioapi"/>
+
 # GPIO API
 This API provides functions to interface GPIOs. It provides functions for easy usage of gpios, the functions are similar to arduino's pinMode and digitalWrite functions.
 ## Configuring the API
@@ -289,6 +295,7 @@ value = gpio_read_pin("C", 3); //reading the value of pin 3 of Port C and stroin
 ```
 
 <a name="uartapi"/>
+
 # UART API
 This API provides functions to interface the UART peripheral of the microcontroller. 
 ## Configuring the API
@@ -355,5 +362,6 @@ char string[5];
 uart_receive_string(string, len);
 ```
 <a name="license"/>
+
 ### LICENCE
 #### GNU General Public License Version 3
