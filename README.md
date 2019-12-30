@@ -1,7 +1,7 @@
 # AVRLIB
-API Library for AVR Microcontrollers.
+Hardware Abstraction Library for AVR Microcontrollers.
 
-AVRLIB is a high level API library for interfacing LCDs, GPIO, USART etc. to the AVR series of Microcontrollers.
+AVRLIB is a high level Hardware Abstarction API library for interfacing LCDs, GPIO, USART etc. to the AVR series of Microcontrollers.
 ## Features of this library:
 
   - Written in C, well documented and includes many examples.
