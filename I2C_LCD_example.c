@@ -1,8 +1,8 @@
 /**
-* AVRLIB: Example source code for using the LCD API
+* AVRLIB: Example source code for using the I2C LCD API
 *
 * Copyright (C) 2019, PURANJAY MOHAN.
-* This file is part of HD44780 LCD AVR LIBRARY
+* This file is part of I2C LCD AVR LIBRARY
 *
 * AVRLIB is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by

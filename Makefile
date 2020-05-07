@@ -28,9 +28,9 @@ LIB=src/lib/
 #Define the AVR Microcontroller here
 MCU=atmega32
 #Define the name of your C file here
-TARGET=I2C_LCD_example
+TARGET=SPI_example
 #add all the APIs you need using $(LIB)api1 $(LIB)api2 ... format.
-OBJ=$(TARGET).o $(LIB)lcd.o $(LIB)gpio.o $(LIB)uart.o $(LIB)i2c.o $(LIB)i2c_lcd.o
+OBJ=$(TARGET).o $(LIB)lcd.o $(LIB)gpio.o $(LIB)uart.o $(LIB)i2c.o $(LIB)i2c_lcd.o $(LIB)spi.o
 
 
 CFLAGS= -mmcu=$(MCU) -Os -Wall $(INC) 
