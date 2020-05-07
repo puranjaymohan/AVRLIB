@@ -25,7 +25,7 @@
 
 int main()
 {
-	lcd_init(0); //initialize the LCD with 8 bit mode
+	lcd_init(1); //initialize the LCD with 8 bit mode
 	lcd_write_string("HELLO AVR"); //lcd_write_string() prints strings on the LCD
 
 

@@ -28,6 +28,7 @@ void i2c_lcd_send_command(unsigned char cmd)
 {	unsigned int DATA;
 	DATA = geti2c(cmd>>4);
 	DATA &= ~(RS) & ~(RW);
+	i2c_write(DATA);
 	DATA |= (EN);
 	i2c_write(DATA);
 	_delay_us(1);
@@ -36,6 +37,7 @@ void i2c_lcd_send_command(unsigned char cmd)
 	_delay_us(200);
 	DATA = geti2c(cmd);
 	DATA &= ~(RS) & ~(RW);
+	i2c_write(DATA);
 	DATA |= (EN);
 	i2c_write(DATA);
 	_delay_us(1);
@@ -53,12 +55,16 @@ void i2c_lcd_init(unsigned int addr)
 	i2c_init();
 	i2c_start(addr);
 	_delay_ms(20);
-	i2c_lcd_send_command(0x33);
-	i2c_lcd_send_command(0x32);	/* Send for 4 bit initialization of LCD  */
-	i2c_lcd_send_command(0x28);	/* 2 line, 5*7 matrix in 4-bit mode */
-	i2c_lcd_send_command(0x0c);	/* Display on cursor off */
-	i2c_lcd_send_command(0x06);	/* Increment cursor (shift cursor to right) */
-	i2c_lcd_send_command(0x01);	/* Clear display screen */
+	i2c_lcd_send_command(0x02);
+	_delay_ms(1);
+	i2c_lcd_send_command(0x28);
+	_delay_ms(1);
+	i2c_lcd_send_command(0x01);
+	_delay_ms(1);
+	i2c_lcd_send_command(0x0c);
+	_delay_ms(1);
+	i2c_lcd_send_command(0x06);
+	_delay_ms(1);
 	return;
 }
 
@@ -67,6 +73,8 @@ void i2c_lcd_send_data(unsigned char data)
 	unsigned int DATA;
 	DATA = geti2c(data>>4);
 	DATA |= (RS);  /* RS=1, data reg. */
+	DATA &=~(RW);
+	i2c_write(DATA);
 	DATA |= (EN);
 	i2c_write(DATA);
 	_delay_us(1);
@@ -74,6 +82,9 @@ void i2c_lcd_send_data(unsigned char data)
 	i2c_write(DATA);
 	_delay_us(200);
 	DATA = geti2c(data);  /* Sending lower nibble */
+	DATA |= (RS);
+	DATA &= ~(RW);
+	i2c_write(DATA);
 	DATA |= (EN);
 	i2c_write(DATA);
 	_delay_us(1);

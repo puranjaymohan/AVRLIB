@@ -42,13 +42,14 @@ void lcd_send_command(unsigned char cmd)
 		_delay_ms(1);
 		CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
 
-		_delay_ms(1);
+		_delay_ms(2);
 		DATAPORT = (cmd << 4) | (DATAPORT & 0x0F);
 		CONPORT &= ~(1<<RS) & ~(1<<RW);
 		CONPORT |= (1<<EN);
 		_delay_ms(1);
 		CONPORT &= ~(1<<RS) & ~(1<<RW) & ~(1<<EN);
 		_delay_ms(2);
+
 		return;
 	}
 }
@@ -76,14 +77,29 @@ void lcd_init(unsigned int mode)
 			bit4=1;
 			DATADDR=0xf0 | DATADDR;
 			CONDDR |= (1<<RS)|(1<<EN)|(1<<RW);
+			lcd_send_command(0x02);
+			_delay_ms(4);
 			lcd_send_command(0x28);
 			_delay_ms(1);
 			lcd_send_command(0x01);
 			_delay_ms(1);
-			lcd_send_command(0x0E);
+			lcd_send_command(0x0c);
 			_delay_ms(1);
+			lcd_send_command(0x06);
+			/*
 			lcd_send_command(0x80);
 			_delay_ms(1);
+			lcd_send_command(0x00);
+			lcd_send_command(0x80);
+			_delay_ms(1);
+			lcd_send_command(0x00);
+			lcd_send_command(0x10);
+			_delay_ms(1);
+			lcd_send_command(0x00);
+			lcd_send_command(0x60);
+			*/
+			_delay_ms(1);
+
 			break;
 
 	return;
