@@ -1,5 +1,6 @@
 
 # AVRLIB
+![alt text](https://github.com/puranjaymohan/avrlib/blob/master/img.jpg?raw=true)
 Hardware Abstraction Library for AVR Microcontrollers.
 
 AVRLIB is a high level Hardware Abstarction API library for interfacing LCDs, GPIO, USART etc. to the AVR series of Microcontrollers.
